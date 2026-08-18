@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misión Física 2026 - Centro Educativo Padre Juan José Cánovas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0e1b 0%, #1a1f3d 50%, #2d1b69 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animación de estrellas */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #00d4ff;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00d4ff, #7b2cbf, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px #00d4ff); }
+            to { filter: drop-shadow(0 0 30px #7b2cbf); }
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            color: #00d4ff;
+            margin-bottom: 20px;
+        }
+        
+        /* Video de bienvenida */
+        .welcome-video {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 3px solid #00d4ff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1f3d, #2d1b69);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .video-placeholder:hover {
+            transform: scale(1.05);
+        }
+        
+        .play-button {
+            width: 100px;
+            height: 100px;
+            background: #ff006e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Barra de progreso global */
+        .progress-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .progress-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #7b2cbf;
+        }
+        
+        .progress-box h2 {
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf, #ff006e);
+            width: 0%;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Menú de temas */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .topic-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+        
+        .topic-card:hover::before {
+            animation: shine 0.5s ease-in-out;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-10px);
+            border-color: #00d4ff;
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+        }
+        
+        .topic-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .topic-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+        
+        .topic-card p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #7b2cbf;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+        
+        .badge.inclusion {
+            background: #ff006e;
+        }
+        
+        /* Botones de navegación */
+        .nav-buttons {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 10px;
+            background: linear-gradient(45deg, #00d4ff, #7b2cbf);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.5);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            margin-top: 50px;
+            border-top: 2px solid #7b2cbf;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .topics-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* Accesibilidad */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        :focus {
+            outline: 3px solid #ff006e;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Estrellas animadas -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <h1>🚀 Misión Física 2026</h1>
+        <p>Centro Educativo Padre Juan José Cánovas - Veraguas</p>
+        <p>Docente: Daymarianeth Herrera González</p>
+        <p style="font-size: 1em; color: #ff006e;">📅 Fecha de entrega: 20 de agosto de 2026</p>
+    </header>
+    
+    <!-- Video de bienvenida -->
+    <section class="welcome-video" aria-label="Video de bienvenida">
+        <h2 style="text-align: center; margin-bottom: 20px;">🎬 Bienvenida a la Aventura</h2>
+        <div class="video-container">
+            <div class="video-placeholder" role="button" tabindex="0" aria-label="Reproducir video de bienvenida">
+                <div class="play-button">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 15px; font-style: italic;">Duración: 30 segundos</p>
+    </section>
+    
+    <!-- Barra de progreso -->
+    <section class="progress-container">
+        <div class="progress-box">
+            <h2>📊 Tu Progreso en la Misión</h2>
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill" id="progressFill">0% Completado</div>
+            </div>
+            <p style="text-align: center; margin-top: 10px;">
+                <span id="completedTopics">0</span> de 4 temas completados
+            </p>
+        </div>
+    </section>
+    
+    <!-- Temas principales -->
+    <main>
+        <h2 style="text-align: center; font-size: 2.5em; margin: 50px 0 30px;">🎯 Selecciona tu Misión</h2>
+        
+        <div class="topics-grid">
+            <!-- Tema 1: MRUV -->
+            <article class="topic-card" onclick="navigateToTopic('mruv')" role="button" tabindex="0" aria-label="Tema 1: Movimiento Rectilíneo Uniformemente Variado">
+                <div class="topic-icon"></div>
+                <h3>Misión 1: MRUV</h3>
+                <p><strong>Movimiento Rectilíneo Uniformemente Variado</strong></p>
+                <p>Domina la aceleración y convierte tu nave en una máquina de precisión temporal</p>
+                <div>
+                    <span class="badge">⏱️ 4 semanas</span>
+                    <span class="badge"> Nivel: Novato → Experto</span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <span class="badge">🔬 3 Laboratorios GeoGebra</span>
+                    <span class="badge">🎮 5 Logros desbloqueables</span>
+                </div>
+            </article>
+            
+            <!-- Tema 2: Movimiento Circular -->
+            <article class="topic-card" onclick="navigateToTopic('circular')" role="button" tabindex="0" aria-label="Tema 2: Movimiento Circular">
+                <div class="topic-icon">🔄</div>
+                <h3>Misión 2: Órbitas</h3>
+                <p><strong>Movimiento Circular y Gravitación</strong></p>
+                <p>Navega por órbitas perfectas y domina la fuerza centrípeta del universo</p>
+                <div>
+                    <span class="badge">⏱️ 4 semanas</span>
+                    <span class="badge"> Nivel: Experto → Avanzado</span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <span class="badge">🔬 3 Laboratorios GeoGebra</span>
+                    <span class="badge">🎮 5 Logros desbloqueables</span>
+                </div>
+            </article>
+            
+            <!-- Tema 3: Óptica -->
+            <article class="topic-card" onclick="navigateToTopic('optica')" role="button" tabindex="0" aria-label="Tema 3: Óptica">
+                <div class="topic-icon">✨</div>
+                <h3>Misión 3: Luz</h3>
+                <p><strong>Óptica y Fenómenos Lumínicos</strong></p>
+                <p>Descifra los secretos de la luz y domina la refracción interestelar</p>
+                <div>
+                    <span class="badge">⏱️ 5 semanas</span>
+                    <span class="badge">📈 Nivel: Avanzado → Maestro</span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <span class="badge">🔬 4 Laboratorios GeoGebra</span>
+                    <span class="badge">🎮 6 Logros desbloqueables</span>
+                </div>
+            </article>
+            
+            <!-- Tema de Inclusión -->
+            <article class="topic-card" onclick="navigateToTopic('inclusion')" role="button" tabindex="0" aria-label="Tema de Inclusión N.E.E." style="border-color: #ff006e;">
+                <div class="topic-icon"></div>
+                <h3 style="color: #ff006e;">Misión Especial: Inclusión</h3>
+                <p><strong>Diseño Universal para el Aprendizaje</strong></p>
+                <p>Contenido adaptado con apoyos visuales, AR y tecnología asistiva</p>
+                <div>
+                    <span class="badge inclusion">♿ DUA</span>
+                    <span class="badge inclusion">🎨 Multisensorial</span>
+                </div>
+                <div style="margin-top: 20px;">
+                    <span class="badge inclusion">🔊 Audio-descripción</span>
+                    <span class="badge inclusion">️ Alto contraste</span>
+                </div>
+            </article>
+        </div>
+        
+        <!-- Botones de navegación -->
+        <div class="nav-buttons">
+            <button class="btn" onclick="startMission()">🚀 Iniciar Misión</button>
+            <button class="btn" onclick="showProgress()">📊 Ver Progreso</button>
+            <button class="btn" onclick="showResources()"> Recursos</button>
+            <button class="btn" onclick="contactTeacher()">‍🏫 Contactar Docente</button>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>Ministerio de Educación - Dirección Regional de Educación de Veraguas</strong></p>
+        <p>Programa de Estudio: Física - Décimo Grado</p>
+        <p style="margin-top: 15px;">
+            <span style="margin: 0 10px;">✅ MEDUCA Compliant</span>
+            <span style="margin: 0 10px;">♿ WCAG 2.1 AA</span>
+            <span style="margin: 0 10px;">📱 Responsive</span>
+        </p>
+        <p style="margin-top: 15px; font-size: 0.9em;">
+            © 2026 - Cuaderno Digital de Física Interactivo<br>
+            "Con paso firme" - Panamá
+        </p>
+    </footer>
+    
+    <script>
+        // Generar estrellas animadas
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Navegación a temas
+        function navigateToTopic(topic) {
+            const topics = {
+                'mruv': '#tema1-mruv',
+                'circular': '#tema2-circular',
+                'optica': '#tema3-optica',
+                'inclusion': '#tema-inclusion'
+            };
+            
+            // Animación de transición
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = topics[topic];
+                document.body.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Iniciar misión
+        function startMission() {
+            alert('🚀 ¡Bienvenido astronauta!\n\nTu primera misión es: MRUV\n\nObjetivo: Dominar el movimiento acelerado\nTiempo estimado: 4 semanas\n\n¿Estás listo para despegar?');
+            navigateToTopic('mruv');
+        }
+        
+        // Mostrar progreso
+        function showProgress() {
+            const progress = document.getElementById('progressFill');
+            const completed = document.getElementById('completedTopics');
+            
+            // Animar barra de progreso
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 25) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    progress.style.width = width + '%';
+                    progress.textContent = width + '% Completado';
+                    completed.textContent = Math.floor(width / 25);
+                }
+            }, 50);
+        }
+        
+        // Mostrar recursos
+        function showResources() {
+            alert('📚 Recursos Disponibles:\n\n🔬 Laboratorios GeoGebra\n Videos interactivos H5P\n📝 Guías de ejercicios\n🎮 Simuladores AR/VR\n💬 Foro de discusión\n📊 Dashboard de calificaciones');
+        }
+        
+        // Contactar docente
+        function contactTeacher() {
+            alert('👨‍🏫 Docente: Daymarianeth Herrera González\n\n📧 Email: dherrera@meduca.gob.pa\n🏫 Centro Educativo: Padre Juan José Cánovas\n📍 Ubicación: Veraguas, Panamá\n\nHorario de atención:\nLunes a Viernes: 7:00 AM - 3:00 PM');
+        }
+        
+        // Teclado accesible
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (e.target.classList.contains('topic-card')) {
+                    e.target.click();
+                }
+            }
+        });
+        
+        // Inicializar
+        window.onload = function() {
+            createStars();
+            
+            // Animar entrada
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 1s';
+                document.body.style.opacity = '1';
+            }, 100);
+        };
+        
+        // Service Worker para modo offline (PWA)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {
+                console.log('Service Worker no registrado (modo offline disponible)');
+            });
+        }
+    </script>
+</body>
+</html>
